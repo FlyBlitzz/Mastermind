@@ -7,12 +7,13 @@
 // Définition des constantes pour la configuration du jeu
 const LONGUEUR_CODE = 4;
 const MAX_TENTATIVES = 12;
+$tentativeRéponse = 0;
 
 // Tableaux indexés des couleurs disponibles
 // NOTE: Les deux tableaux doivent avoir le même ordre pour maintenir la correspondance !
 $initialesCouleurs = ['R', 'V', 'B', 'J', 'P', 'N']; // Les initiales que le joueur saisit
 $emojisCouleurs = ['🔴', '🟢', '🔵', '🟡', '🟣', '⚫']; // Les emojis pour l'affichage
-
+$plateauJeu = [];
 // Emojis pour les indices
 const CLE_BIEN_PLACE = '🔑';
 const PION_MAL_PLACE = '⚪';
@@ -149,8 +150,21 @@ for ($tentative = 1; $tentative <= MAX_TENTATIVES; $tentative++) {
         $affichageIndices = $affichageIndices . PION_MAL_PLACE . " ";
     }
 
-    echo "Proposition : $affichageProposition\n";
-    echo "Indices     : $affichageIndices\n";
+    echo "---Plateau de jeu---", PHP_EOL, "------------------------------", PHP_EOL;
+    $tentativeRéponse++;
+    array_push($plateauJeu, $tentativeRéponse, ". ");
+    array_push($plateauJeu, $affichageProposition);
+    array_push($plateauJeu, " |  ");
+    array_push($plateauJeu, $affichageIndices);
+    array_push($plateauJeu, " ");
+    foreach ($plateauJeu as $plateauDeJeu) {
+        echo $plateauDeJeu;
+        if ($plateauDeJeu == " ") {
+            echo PHP_EOL;
+        }
+    }
+    echo "------------------------------";
+
 
     if ($bienPlace === LONGUEUR_CODE) {
         $victoire = true;
